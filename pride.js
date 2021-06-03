@@ -1,12 +1,13 @@
 'use strict';
 const COLOR_SCHEMES = {
-    'standard': ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
-    'modern':   ['#E53935', '#FB8C00', '#FDD835', '#43A047', '#1E88E5', '#8E24AA'],
-    'bi':       ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
-    'trans':    ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
-    'enby':     ['#b67fdb', '#ffffff', '#478121'],
-    'ace':      ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
-    'pan':      ['#ff1e8c', '#fed818', '#1fb2fd'],
+    'standard':    ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
+    'modern':      ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
+    'bi':          ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
+    'trans':       ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
+    'genderqueer': ['#b67fdb', '#ffffff', '#478121'],
+    'enby':        ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
+    'ace':         ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
+    'pan':         ['#ff1e8c', '#fed818', '#1fb2fd'],
 };
 const $ = (selector) => document.querySelector(selector);
 const canvas = $('#canvas');
