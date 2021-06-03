@@ -2,6 +2,7 @@
 const COLOR_SCHEMES = {
     'standard': ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
     'modern':   ['#E53935', '#FB8C00', '#FDD835', '#43A047', '#1E88E5', '#8E24AA'],
+    'bi':       ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
     'trans':    ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
     'enby':     ['#b67fdb', '#ffffff', '#478121'],
     'ace':      ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
@@ -12,6 +13,7 @@ const canvas = $('#canvas');
 const ctx = canvas.getContext('2d');
 const scale = $('#scale');
 const rotate = $('#rotate');
+const margin = $('#margin');
 const download = $('#download');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -43,6 +45,7 @@ $('#file').addEventListener('change', event => {
 });
 scale.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
+margin.addEventListener('change', redraw);
 
 // Handle dropping image file
 function onDrop(event) {
@@ -98,10 +101,9 @@ function redraw() {
     ctx.resetTransform();
 
     // Draw circluar crop mask
-    const MARGIN = 30
     ctx.translate(halfWidth, halfWidth);
     ctx.beginPath()
-    ctx.arc(0, 0, halfWidth - MARGIN, 0, Math.PI * 2);
+    ctx.arc(0, 0, halfWidth - margin.value, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
     ctx.resetTransform();
@@ -115,7 +117,7 @@ function redraw() {
         0, 0, canvas.width, canvas.height
     );
 
-    download.href = canvas.toDataURL();
+    download.href = canvas.toDataURL('image/png');
 }
 
 redraw();

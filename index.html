@@ -11,17 +11,19 @@
     <form ondrop="onDrop(event);" ondragover="event.preventDefault()">
         <header><h1>Pride Avatar Generator</h1></header>
         <div class="slider-wrapper">
-            <input id="scale" type="range" min="0.5" max="1.5" step="any" value="1">
+            <input id="scale" title="Scale" type="range" min="0.5" max="1.5" step="any" value="1">
+            <input id="margin" title="Margin" type="range" min="0" max="100" step="any" value="30">
         </div>
-        <canvas id="canvas" width="300px" height="300px"></canvas>
-        <input id="rotate" type="range" min="-90" max="90" step="any" value="-30">
+        <canvas id="canvas" width="640px" height="640px"></canvas>
+        <input id="rotate" title="Angle" type="range" min="-90" max="90" step="any" value="0">
+        <br>
         <input id='file' type='file' accept='image/*'>
         <p id="colors">
             <template id="color-radio">
                 <label><input type="radio" name="color"></label>
             </template>
         </p>
-        <p><a id="download" download="pride-avatar.jpg">&gt; Save as JPEG</a></p>
+        <p><a id="download" download="pride-avatar.png">&gt; Save as PNG</a></p>
     </form>
     <footer>
         | Fork me on <a href="https://github.com/sorz/prideavatar/">GitHub</a>
