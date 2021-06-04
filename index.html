@@ -10,13 +10,24 @@
   <body>
     <form ondrop="onDrop(event);" ondragover="event.preventDefault()">
         <header><h1>Pride Avatar Generator</h1></header>
-        <div class="slider-wrapper">
-            <input id="scale" title="Scale" type="range" min="0.5" max="1.5" step="any" value="1">
-            <input id="margin" title="Margin" type="range" min="0" max="100" step="any" value="30">
+        <label class="label-wrapper">Image size: <input id="size" type="number" min="200" max="1200" step="1" value="400" size="5">px</label>
+        <canvas id="canvas" width="640" height="640"></canvas>
+        <div class="grid-wrapper">
+            <label for="margin">Margin:</label>
+            <input id="margin" title="Margin" type="number" min="-200" max="200" step="any" value="12" size="4">
+            <label for="scale">Scale:</label>
+            <span class="slider-wrapper">
+                <input id="scale" title="Scale" type="range" min="0.5" max="2" step="any" value="1">
+                <output id="scale-value"></output>
+            </span>
+            <label for="rotate">Angle:</label>
+            <input id="rotate" title="Angle" type="number" min="-90" max="90" step="any" value="0" size="4">
+            <label for="opacity">Opacity:</label>
+            <span class="slider-wrapper">
+                <input id="opacity" title="Opacity" type="range" min="0" max="1" step="any" value="1">
+                <output id="opacity-value"></output>
+            </span>
         </div>
-        <canvas id="canvas" width="640px" height="640px"></canvas>
-        <input id="rotate" title="Angle" type="range" min="-90" max="90" step="any" value="0">
-        <br>
         <input id='file' type='file' accept='image/*'>
         <p id="colors">
             <template id="color-radio">

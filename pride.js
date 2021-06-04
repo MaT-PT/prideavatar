@@ -12,7 +12,11 @@ const COLOR_SCHEMES = {
 const $ = (selector) => document.querySelector(selector);
 const canvas = $('#canvas');
 const ctx = canvas.getContext('2d');
+const size = $('#size');
 const scale = $('#scale');
+const scaleValue = $('#scale-value');
+const opacity = $('#opacity');
+const opacityValue = $('#opacity-value');
 const rotate = $('#rotate');
 const margin = $('#margin');
 const download = $('#download');
@@ -28,7 +32,7 @@ ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
         const input = clone.querySelector('input');
         const label = clone.querySelector('label');
         input.value = name;
-        input.checked = i == 1;
+        input.checked = i === 1;
         input.addEventListener('change', redraw);
         label.appendChild(document.createTextNode(name));
         list.appendChild(clone);
@@ -45,8 +49,10 @@ $('#file').addEventListener('change', event => {
     reader.readAsDataURL(event.target.files[0])
 });
 scale.addEventListener('change', redraw);
+opacity.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
 margin.addEventListener('change', redraw);
+size.addEventListener('change', resize);
 
 // Handle dropping image file
 function onDrop(event) {
@@ -71,7 +77,21 @@ canvas.addEventListener('wheel', event => {
     redraw();
 });
 
+function resize() {
+    canvas.width = canvas.height = size.value;
+    margin.max = Math.round(size.value / 2);
+    margin.min = -margin.max;
+    redraw();
+}
+
+function roundPercentage(value) {
+    return (Math.round((parseFloat(value) + Number.EPSILON) * 10000) / 100).toString() + '%';
+}
+
 function redraw() {
+    scaleValue.value = roundPercentage(scale.value);
+    opacityValue.value = roundPercentage(opacity.value);
+    
     const halfWidth = canvas.width / 2;
     // Reset
     ctx.restore();
@@ -91,7 +111,7 @@ function redraw() {
     colors.forEach((color, i) => {
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, canvas.width * 2, canvas.width);
-        if (i == 0)
+        if (i === 0)
             ctx.translate(0,
                 halfWidth + rainbowWidth -
                 (rainbowWidthExtra * (colors.length - 2) / 2)
@@ -113,6 +133,7 @@ function redraw() {
     const dimension = Math.min(image.width, image.height) * scale.value;
     const xOffset = (image.width - dimension) / 2;
     const yOffset = (image.height - dimension) / 2;
+    ctx.globalAlpha = opacity.value;
     ctx.drawImage(
         image, xOffset, yOffset, dimension, dimension,
         0, 0, canvas.width, canvas.height
@@ -121,4 +142,4 @@ function redraw() {
     download.href = canvas.toDataURL('image/png');
 }
 
-redraw();
+resize();
