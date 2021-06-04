@@ -24,8 +24,11 @@ h1 {
     grid-gap: 0.5em 0.5em;
     margin: 1em auto;
 }
-.grid-wrapper label {
+.grid-wrapper label[for] {
     text-align: right;
+}
+.grid-wrapper label:not([for]) {
+    grid-column: 1 / span 4;
 }
 .slider-wrapper {
     text-align: left;
@@ -37,7 +40,7 @@ input[type="range"] {
 }
 #margin,
 #rotate {
-    width: 42px;
+    width: 56px;
     text-align: right;
 }
 #download {

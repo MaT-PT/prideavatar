@@ -19,6 +19,7 @@ const opacity = $('#opacity');
 const opacityValue = $('#opacity-value');
 const rotate = $('#rotate');
 const margin = $('#margin');
+const autoscale = $('#autoscale');
 const download = $('#download');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -48,10 +49,22 @@ image.onload = redraw;
 $('#file').addEventListener('change', event => {
     reader.readAsDataURL(event.target.files[0])
 });
-scale.addEventListener('change', redraw);
+scale.addEventListener('change', () => {
+    if (autoscale.checked) {
+        const halfWidth = canvas.width / 2;
+        margin.value = halfWidth - halfWidth / scale.value;
+    }
+    redraw();
+});
+margin.addEventListener('change', () => {
+    if (autoscale.checked) {
+        const halfWidth = canvas.width / 2;
+        scale.value = halfWidth / (halfWidth - margin.value);
+    }
+    redraw();
+});
 opacity.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
-margin.addEventListener('change', redraw);
 size.addEventListener('change', resize);
 
 // Handle dropping image file
@@ -73,8 +86,8 @@ canvas.addEventListener('wheel', event => {
     let x = parseFloat(scale.value);
     if (event.deltaY < 0) x -= 0.05;
     else x += 0.05;
-    scale.value = x;
-    redraw();
+    scale.value = x.toFixed(4);
+    scale.dispatchEvent(new Event('change'));
 });
 
 function resize() {
