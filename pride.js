@@ -20,6 +20,8 @@ const opacityValue = $('#opacity-value');
 const rotate = $('#rotate');
 const margin = $('#margin');
 const autoscale = $('#autoscale');
+const offX = $('#offx');
+const offY = $('#offy');
 const download = $('#download');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -49,13 +51,6 @@ image.onload = redraw;
 $('#file').addEventListener('change', event => {
     reader.readAsDataURL(event.target.files[0])
 });
-scale.addEventListener('change', () => {
-    if (autoscale.checked) {
-        const halfWidth = canvas.width / 2;
-        margin.value = halfWidth - halfWidth / scale.value;
-    }
-    redraw();
-});
 margin.addEventListener('change', () => {
     if (autoscale.checked) {
         const halfWidth = canvas.width / 2;
@@ -63,8 +58,11 @@ margin.addEventListener('change', () => {
     }
     redraw();
 });
+scale.addEventListener('change', rescale);
 opacity.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
+offX.addEventListener('change', redraw);
+offY.addEventListener('change', redraw);
 size.addEventListener('change', resize);
 
 // Handle dropping image file
@@ -94,6 +92,14 @@ function resize() {
     canvas.width = canvas.height = size.value;
     margin.max = Math.round(size.value / 2);
     margin.min = -margin.max;
+    rescale();
+}
+
+function rescale() {
+    if (autoscale.checked) {
+        const halfWidth = canvas.width / 2;
+        margin.value = halfWidth - halfWidth / scale.value;
+    }
     redraw();
 }
 
@@ -144,8 +150,8 @@ function redraw() {
 
     // Draw user's avatar
     const dimension = Math.min(image.width, image.height) * scale.value;
-    const xOffset = (image.width - dimension) / 2;
-    const yOffset = (image.height - dimension) / 2;
+    const xOffset = (image.width  - dimension) / 2 + parseFloat(offX.value);
+    const yOffset = (image.height - dimension) / 2 + parseFloat(offY.value);
     ctx.globalAlpha = opacity.value;
     ctx.drawImage(
         image, xOffset, yOffset, dimension, dimension,

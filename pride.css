@@ -27,19 +27,18 @@ h1 {
 .grid-wrapper label[for] {
     text-align: right;
 }
-.grid-wrapper label:not([for]) {
-    grid-column: 1 / span 4;
+.span-4 {
+    grid-column-end: span 4;
 }
 .slider-wrapper {
     text-align: left;
 }
-input[type="range"] {
+.grid-wrapper input[type="range"] {
     width: 200px;
     height: 1em;
     vertical-align: middle;
 }
-#margin,
-#rotate {
+.grid-wrapper input[type="number"] {
     width: 56px;
     text-align: right;
 }
