@@ -10,6 +10,9 @@ h1 {
     color: darkslategray;
     font-size: 1.5em;
 }
+input[type="checkbox"] {
+    vertical-align: text-bottom;
+}
 .label-wrapper {
     display: block;
     margin: 1em auto;
