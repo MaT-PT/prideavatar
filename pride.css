@@ -1,13 +1,13 @@
 body {
     width: 1200px;
     margin: 1em auto;
-    color: #555;
+    color: #ddd;
+    background-color: #333;
     font-size: 1.2em;
     line-height: 1.5;
     text-align: center;
 }
 h1 {
-    color: darkslategray;
     font-size: 1.5em;
 }
 input[type="checkbox"] {
@@ -46,7 +46,7 @@ input[type="checkbox"] {
     text-align: right;
 }
 #download {
-    color: black;
+    color: white;
     font-weight: bold;
 }
 a:link {
@@ -58,15 +58,15 @@ a:hover {
 footer {
     margin-top: 2rem;
     font-size: 0.8rem;
-    color: #555;
-    opacity: 0.3;
+    color: #999;
+    opacity: 0.5;
     transition: all 0.2s ease-in-out;
 }
 footer:hover {
     opacity: 1;
 }
 footer a {
-    color: black;
+    color: white;
 }
 #colors label {
     display: inline-block;
