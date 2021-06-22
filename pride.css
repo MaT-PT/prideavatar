@@ -45,9 +45,25 @@ input[type="checkbox"] {
     width: 56px;
     text-align: right;
 }
-#download {
-    color: white;
+#download-btn {
+    color: #ddd;
     font-weight: bold;
+    background-color: #666;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 100%;
+    box-shadow: inset -3px -3px 3px rgba(0, 0, 0, 0.5),
+                inset 3px 3px 3px rgba(255, 255, 255, 0.5);
+}
+#download-btn:hover {
+    color: white;
+    background-color: #888;
+}
+#download-btn:active {
+    padding: 12px 18px 8px 22px;
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.5),
+                inset -3px -3px 3px rgba(255, 255, 255, 0.5);
 }
 a:link {
     text-decoration: none;

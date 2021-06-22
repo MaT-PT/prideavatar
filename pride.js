@@ -23,6 +23,7 @@ const autoscale = $('#autoscale');
 const offX = $('#offx');
 const offY = $('#offy');
 const download = $('#download');
+const downloadBtn = $('#download-btn');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -51,6 +52,10 @@ image.onload = redraw;
 $('#file').addEventListener('change', event => {
     reader.readAsDataURL(event.target.files[0])
 });
+downloadBtn.onclick = () => {
+    download.href = canvas.toDataURL('image/png');
+    download.click();
+}
 margin.addEventListener('change', () => {
     if (autoscale.checked) {
         const halfWidth = canvas.width / 2;
@@ -108,6 +113,7 @@ function roundPercentage(value) {
 }
 
 function redraw() {
+    console.log("REDRAW");
     scaleValue.value = roundPercentage(scale.value);
     opacityValue.value = roundPercentage(opacity.value);
     
@@ -157,8 +163,6 @@ function redraw() {
         image, xOffset, yOffset, dimension, dimension,
         0, 0, canvas.width, canvas.height
     );
-
-    download.href = canvas.toDataURL('image/png');
 }
 
 resize();
