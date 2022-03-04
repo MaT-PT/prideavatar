@@ -121,6 +121,24 @@ function roundPercentage(value) {
     return (Math.round((parseFloat(value) + Number.EPSILON) * 10000) / 100).toString() + '%';
 }
 
+/**
+ * Draw stripes with the given colors, width and height.
+ * angleRatio represents how much the stripes should be scaled
+ * given their angle.
+ * @param {String[]} colors 
+ * @param {Number} width 
+ * @param {Number} height
+ * @param {Number} angleRatio
+ */
+function drawColors(colors, width, height, angleRatio) {
+    const stripeHeight = (height / colors.length) * angleRatio;
+    colors.forEach(color => {
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, width, stripeHeight + 1);
+        ctx.translate(0, stripeHeight);
+    });
+}
+
 function redraw() {
     console.log("REDRAW");
     scaleValue.value = roundPercentage(scale.value);
@@ -137,17 +155,12 @@ function redraw() {
     /** @type {String[]} */
     const colors = COLOR_SCHEMES[color];
     const radians = rotate.value * Math.PI / 180;
-    const angleRatio = Math.abs(Math.sin(radians * 2)) * 0.5;
-    const rainbowWidth = (canvas.width / colors.length) * (1 + angleRatio);
+    const angleRatio = 1 + Math.abs(Math.sin(radians * 2)) * 0.5;
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
-    ctx.translate(-canvas.width, -halfWidth * (1 + angleRatio));
-    colors.forEach(color => {
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width * 2, rainbowWidth + 1);
-        ctx.translate(0, rainbowWidth);
-    });
+    ctx.translate(-canvas.width, -halfWidth * angleRatio);
+    drawColors(colors, canvas.width * 2, canvas.height, angleRatio);
     ctx.resetTransform();
 
     // Draw circluar crop mask
