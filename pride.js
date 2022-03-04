@@ -75,12 +75,14 @@ offX.addEventListener('change', redraw);
 offY.addEventListener('change', redraw);
 size.addEventListener('change', resize);
 
-// Handle dropping image file
+/**
+ * Handle dropping image file
+ * @param {DragEvent} event 
+ */
 function onDrop(event) {
     event.preventDefault();
     const files = event.dataTransfer.files;
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const file of files) {
         if (file.type.startsWith('image/')) {
             reader.readAsDataURL(file);
             break;
@@ -92,8 +94,10 @@ function onDrop(event) {
 canvas.addEventListener('wheel', event => {
     event.preventDefault();
     let x = parseFloat(scale.value);
-    if (event.deltaY < 0) x -= 0.05;
-    else x += 0.05;
+    if (event.deltaY < 0)
+        x -= 0.05;
+    else
+        x += 0.05;
     scale.value = x.toFixed(4);
     scale.dispatchEvent(new Event('change'));
 });
@@ -130,6 +134,7 @@ function redraw() {
 
     // Draw rainbow
     const color = $('input[name=color]:checked').value || 'standard';
+    /** @type {String[]} */
     const colors = COLOR_SCHEMES[color];
     const radians = rotate.value * Math.PI / 180;
     const rainbowWidth = canvas.width / colors.length;
@@ -137,17 +142,19 @@ function redraw() {
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
-    ctx.translate(-canvas.width, -canvas.width);
+    ctx.translate(-canvas.width, -canvas.height);
     colors.forEach((color, i) => {
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, canvas.width * 2, canvas.width);
-        if (i === 0)
+        if (i === 0) {
             ctx.translate(0,
                 halfWidth + rainbowWidth -
                 (rainbowWidthExtra * (colors.length - 2) / 2)
             );
-        else
+        }
+        else {
             ctx.translate(0, rainbowWidth + rainbowWidthExtra);
+        }
     });
     ctx.resetTransform();
 
