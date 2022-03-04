@@ -12,7 +12,9 @@ const COLOR_SCHEMES = {
     'pan':         ['#ff1e8c', '#fed818', '#1fb2fd'],
 };
 const DEFAULT_SCHEME = 'modern';
+/** @param {String} selector @returns {HTMLElement} */
 const $ = (selector) => document.querySelector(selector);
+/** @type {HTMLCanvasElement} */
 const canvas = $('#canvas');
 const ctx = canvas.getContext('2d');
 const size = $('#size');
