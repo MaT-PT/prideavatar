@@ -137,24 +137,16 @@ function redraw() {
     /** @type {String[]} */
     const colors = COLOR_SCHEMES[color];
     const radians = rotate.value * Math.PI / 180;
-    const rainbowWidth = canvas.width / colors.length;
-    const rainbowWidthExtra = rainbowWidth * Math.abs(Math.sin(radians * 2)) * 0.5;
+    const angleRatio = Math.abs(Math.sin(radians * 2)) * 0.5;
+    const rainbowWidth = (canvas.width / colors.length) * (1 + angleRatio);
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
-    ctx.translate(-canvas.width, -canvas.height);
-    colors.forEach((color, i) => {
+    ctx.translate(-canvas.width, -halfWidth * (1 + angleRatio));
+    colors.forEach(color => {
         ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width * 2, canvas.width);
-        if (i === 0) {
-            ctx.translate(0,
-                halfWidth + rainbowWidth -
-                (rainbowWidthExtra * (colors.length - 2) / 2)
-            );
-        }
-        else {
-            ctx.translate(0, rainbowWidth + rainbowWidthExtra);
-        }
+        ctx.fillRect(0, 0, canvas.width * 2, rainbowWidth + 1);
+        ctx.translate(0, rainbowWidth);
     });
     ctx.resetTransform();
 
