@@ -2,4 +2,4 @@
 
 Generate avatar with rainbow background using HTML Canvas.
 
-[Open it](https://mat-pt.github.io/prideavatar/)
+[View online version](https://mat-pt.github.io/prideavatar/)
