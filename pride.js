@@ -1,6 +1,6 @@
 'use strict';
 const COLOR_SCHEMES = {
-    'ukraine':     ['#005bbb', '#ffd500'],
+    '🇺🇦 ukraine':  ['#005bbb', '#ffd500'],
     'standard':    ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
     'modern':      ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
     'progress':    ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
