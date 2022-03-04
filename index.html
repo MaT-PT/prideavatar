@@ -37,11 +37,18 @@
             <input id="offy" title="Y offset" type="number" step="any" value="0" size="5">
         </div>
         <input id='file' type='file' accept='image/*'>
-        <p id="colors">
-            <template id="color-radio">
-                <label><input type="radio" name="color"></label>
-            </template>
-        </p>
+        <div>
+            <p id="colors1">
+                <template id="color-radio">
+                    <label><input type="radio" name="color1"></label>
+                </template>
+            </p>
+            <label title="Split flag vertically into separate halves of different colors">
+                <input type="checkbox" id="split-flag">
+                Add a second flag
+            </label>
+            <p id="colors2" class="hidden"></p>
+        </div>
         <p>
             <button id="download-btn" type="button">Save as PNG</button>
             <a id="download" download="pride-avatar.png" style="visibility: hidden;"></a>

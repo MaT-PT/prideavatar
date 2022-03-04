@@ -27,26 +27,13 @@ const margin = $('#margin');
 const autoscale = $('#autoscale');
 const offX = $('#offx');
 const offY = $('#offy');
+const colorList1 = $('#colors1');
+const colorList2 = $('#colors2');
+const splitFlag = $('#split-flag');
 const download = $('#download');
 const downloadBtn = $('#download-btn');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-// Generate color scheme list
-(() => {
-    const template = $('#color-radio')
-    const list = $('#colors');
-    Object.keys(COLOR_SCHEMES).forEach((name) => {
-        const clone = document.importNode(template.content, true);
-        const input = clone.querySelector('input');
-        const label = clone.querySelector('label');
-        input.value = name;
-        input.checked = name === DEFAULT_SCHEME;
-        input.addEventListener('change', redraw);
-        label.appendChild(document.createTextNode(name));
-        list.appendChild(clone);
-    });
-})();
 
 // Redraw after avatar file read
 const reader = new FileReader();
@@ -68,12 +55,41 @@ margin.addEventListener('change', () => {
     }
     redraw();
 });
+splitFlag.addEventListener('change', () => {
+    colorList2.classList.toggle('hidden', !splitFlag.checked);
+    redraw();
+});
 scale.addEventListener('change', rescale);
 opacity.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
 offX.addEventListener('change', redraw);
 offY.addEventListener('change', redraw);
 size.addEventListener('change', resize);
+
+// Generate color scheme list
+(() => {
+    const template = $('#color-radio');
+
+    Object.keys(COLOR_SCHEMES).forEach(name => {
+        const clone = document.importNode(template.content, true);
+        const input = clone.querySelector('input');
+        const label = clone.querySelector('label');
+        input.value = name;
+        input.checked = name === DEFAULT_SCHEME;
+        input.addEventListener('change', redraw);
+        label.appendChild(document.createTextNode(name));
+
+        const clone2 = clone.cloneNode(true);
+        const input2 = clone2.querySelector('input');
+        input2.name = 'color2';
+        input2.addEventListener('change', redraw);
+
+        colorList1.appendChild(clone);
+        colorList2.appendChild(clone2);
+    });
+
+    splitFlag.dispatchEvent(new Event('change'));
+})();
 
 /**
  * Handle dropping image file
@@ -151,16 +167,22 @@ function redraw() {
     //ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw rainbow
-    const color = $('input[name=color]:checked').value || 'standard';
-    /** @type {String[]} */
-    const colors = COLOR_SCHEMES[color];
+    const color1 = $('input[name=color1]:checked').value || 'standard';
+    const color2 = $('input[name=color2]:checked').value || 'standard';
     const radians = rotate.value * Math.PI / 180;
     const angleRatio = 1 + Math.abs(Math.sin(radians * 2)) * 0.5;
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
     ctx.translate(-canvas.width, -halfWidth * angleRatio);
-    drawColors(colors, canvas.width * 2, canvas.height, angleRatio);
+    if (splitFlag.checked) {
+        drawColors(COLOR_SCHEMES[color1], canvas.width + 1, canvas.height, angleRatio);
+        ctx.translate(canvas.width, -canvas.width *  angleRatio);
+        drawColors(COLOR_SCHEMES[color2], canvas.width, canvas.height, angleRatio);
+    }
+    else {
+        drawColors(COLOR_SCHEMES[color1], canvas.width * 2, canvas.height, angleRatio);
+    }
     ctx.resetTransform();
 
     // Draw circluar crop mask

@@ -45,6 +45,9 @@ input[type="checkbox"] {
     width: 56px;
     text-align: right;
 }
+.hidden {
+    display: none;
+}
 #download-btn {
     color: #ddd;
     font-weight: bold;
@@ -84,7 +87,7 @@ footer:hover {
 footer a {
     color: white;
 }
-#colors label {
+#colors1 label, #colors2 label {
     display: inline-block;
     text-transform: capitalize;
 }
