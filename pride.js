@@ -11,6 +11,7 @@ const COLOR_SCHEMES = {
     'ace':         ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
     'pan':         ['#ff1e8c', '#fed818', '#1fb2fd'],
 };
+const DEFAULT_SCHEME = 'modern';
 const $ = (selector) => document.querySelector(selector);
 const canvas = $('#canvas');
 const ctx = canvas.getContext('2d');
@@ -33,12 +34,12 @@ ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
 (() => {
     const template = $('#color-radio')
     const list = $('#colors');
-    Object.keys(COLOR_SCHEMES).forEach((name, i) => {
+    Object.keys(COLOR_SCHEMES).forEach((name) => {
         const clone = document.importNode(template.content, true);
         const input = clone.querySelector('input');
         const label = clone.querySelector('label');
         input.value = name;
-        input.checked = i === 1;
+        input.checked = name === DEFAULT_SCHEME;
         input.addEventListener('change', redraw);
         label.appendChild(document.createTextNode(name));
         list.appendChild(clone);
