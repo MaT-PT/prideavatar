@@ -19,6 +19,7 @@ const $ = (selector) => document.querySelector(selector);
 const canvas = $('#canvas');
 const ctx = canvas.getContext('2d');
 const size = $('#size');
+const previewCircle = $('#preview-circle');
 const scale = $('#scale');
 const scaleValue = $('#scale-value');
 const opacity = $('#opacity');
@@ -61,6 +62,7 @@ splitFlag.addEventListener('change', () => {
     redraw();
 });
 scale.addEventListener('change', rescale);
+previewCircle.addEventListener('change', redraw);
 opacity.addEventListener('change', redraw);
 rotate.addEventListener('change', redraw);
 offX.addEventListener('change', redraw);
@@ -165,11 +167,19 @@ function redraw() {
     // Reset
     ctx.restore();
     ctx.save();
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (previewCircle.checked) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath()
+        ctx.arc(halfWidth, halfWidth, halfWidth, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.resetTransform();
+    }
 
     // Draw rainbow
-    const color1 = $('input[name=color1]:checked').value || 'standard';
-    const color2 = $('input[name=color2]:checked').value || 'standard';
+    const color1 = $('input[name="color1"]:checked').value || 'standard';
+    const color2 = $('input[name="color2"]:checked').value || 'standard';
     const radians = rotate.value * Math.PI / 180;
     const angleRatio = 1 + Math.abs(Math.sin(radians * 2)) * 0.5;
 
@@ -187,9 +197,8 @@ function redraw() {
     ctx.resetTransform();
 
     // Draw circluar crop mask
-    ctx.translate(halfWidth, halfWidth);
     ctx.beginPath()
-    ctx.arc(0, 0, halfWidth - margin.value, 0, Math.PI * 2);
+    ctx.arc(halfWidth, halfWidth, halfWidth - margin.value, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
     ctx.resetTransform();
