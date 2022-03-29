@@ -36,6 +36,8 @@ const download = $('#download');
 const downloadBtn = $('#download-btn');
 const form = $('form');
 ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
+ctx.imageSmoothingEnabled = true;
+ctx.imageSmoothingQuality = 'high';
 
 // Redraw after avatar file read
 const reader = new FileReader();
@@ -68,6 +70,65 @@ rotate.addEventListener('change', redraw);
 offX.addEventListener('change', redraw);
 offY.addEventListener('change', redraw);
 size.addEventListener('change', resize);
+
+// Manage dragging events to move the image on the canvas
+(() => {
+    let isDragging = false;
+    let dragX = 0;
+    let dragY = 0;
+
+    canvas.addEventListener("mousedown", ev => {
+        isDragging = true;
+        dragX = ev.offsetX;
+        dragY = ev.offsetY;
+    });
+    canvas.addEventListener("mouseup", ev => {
+        isDragging = false;
+    });
+    canvas.addEventListener("mousemove", ev => {
+        if (!(isDragging && ev.buttons === 1)) return;
+
+        ev.preventDefault();
+        ev.stopPropagation();
+        const deltaX = dragX - ev.offsetX;
+        const deltaY = dragY - ev.offsetY;
+        dragX = ev.offsetX;
+        dragY = ev.offsetY;
+
+        const imageScale = scale.value * Math.min(image.width / canvas.width, image.height / canvas.height);
+        offX.value = parseFloat(offX.value) + imageScale * deltaX;
+        offY.value = parseFloat(offY.value) + imageScale * deltaY;
+        redraw();
+    });
+    canvas.addEventListener("touchstart", ev => {
+        isDragging = true;
+        const touch = ev.touches[0];
+        dragX = touch.pageX;
+        dragY = touch.pageY;
+    });
+    canvas.addEventListener("touchend", ev => {
+        isDragging = false;
+    });
+    canvas.addEventListener("touchcancel", ev => {
+        isDragging = false;
+    });
+    canvas.addEventListener("touchmove", ev => {
+        if (!isDragging) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        const touch = ev.touches[0];
+        const deltaX = dragX - touch.pageX;
+        const deltaY = dragY - touch.pageY;
+        dragX = touch.pageX;
+        dragY = touch.pageY;
+
+        const imageScale = scale.value * Math.min(image.width / canvas.width, image.height / canvas.height);
+        offX.value = parseFloat(offX.value) + imageScale * deltaX;
+        offY.value = parseFloat(offY.value) + imageScale * deltaY;
+        redraw();
+    });
+})();
 
 // Generate color scheme list
 (() => {
