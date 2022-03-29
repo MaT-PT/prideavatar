@@ -149,13 +149,32 @@ function roundPercentage(value) {
  * @param {Number} height
  * @param {Number} angleRatio
  */
-function drawColors(colors, width, height, angleRatio) {
-    const stripeHeight = (height / colors.length) * angleRatio;
-    colors.forEach(color => {
+function drawColors(colors, width, height) {
+    const marginValue = parseFloat(margin.value);
+    // Use the "middle" circle between the inner and outer ones as the basis for stripe height
+    const adjustedHeight = height - marginValue;
+    ctx.translate(0, marginValue / 2);
+    let position = 0;
+    colors.forEach((color, i) => {
+        const newPosition = (1 - Math.cos(Math.PI * (i + 1) / colors.length)) / 2;
+        const stripeHeight = adjustedHeight * (newPosition - position);
+        position = newPosition;
         ctx.fillStyle = color;
-        ctx.fillRect(0, 0, width, stripeHeight + 1);
+        if (colors.length === 1) {
+            ctx.fillRect(0, -height / 2, width, height * 2);
+        }
+        else if (i === 0) {
+            ctx.fillRect(0, -height / 2, width, stripeHeight + height / 2 + 1);
+        }
+        else if (i === colors.length - 1) {
+            ctx.fillRect(0, 0, width, stripeHeight + height / 2);
+        }
+        else {
+            ctx.fillRect(0, 0, width, stripeHeight + 1);
+        }
         ctx.translate(0, stripeHeight);
     });
+    ctx.translate(0, marginValue / 2);
 }
 
 function redraw() {
@@ -181,18 +200,17 @@ function redraw() {
     const color1 = $('input[name="color1"]:checked').value || 'standard';
     const color2 = $('input[name="color2"]:checked').value || 'standard';
     const radians = rotate.value * Math.PI / 180;
-    const angleRatio = 1 + Math.abs(Math.sin(radians * 2)) * 0.5;
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
-    ctx.translate(-canvas.width, -halfWidth * angleRatio);
+    ctx.translate(-canvas.width, -halfWidth);
     if (splitFlag.checked) {
-        drawColors(COLOR_SCHEMES[color1], canvas.width + 1, canvas.height, angleRatio);
-        ctx.translate(canvas.width, -canvas.width *  angleRatio);
-        drawColors(COLOR_SCHEMES[color2], canvas.width, canvas.height, angleRatio);
+        drawColors(COLOR_SCHEMES[color1], canvas.width + 1, canvas.height);
+        ctx.translate(canvas.width, -canvas.height);
+        drawColors(COLOR_SCHEMES[color2], canvas.width, canvas.height);
     }
     else {
-        drawColors(COLOR_SCHEMES[color1], canvas.width * 2, canvas.height, angleRatio);
+        drawColors(COLOR_SCHEMES[color1], canvas.width * 2, canvas.height);
     }
     ctx.resetTransform();
 
