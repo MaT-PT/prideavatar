@@ -53,13 +53,6 @@ downloadBtn.onclick = () => {
     download.href = canvas.toDataURL('image/png');
     download.click();
 }
-margin.addEventListener('change', () => {
-    if (autoscale.checked) {
-        const halfWidth = canvas.width / 2;
-        scale.value = halfWidth / (halfWidth - margin.value);
-    }
-    redraw();
-});
 splitFlag.addEventListener('change', () => {
     colorList2.classList.toggle('hidden', !splitFlag.checked);
     redraw();
@@ -71,6 +64,8 @@ rotate.addEventListener('change', redraw);
 offX.addEventListener('change', redraw);
 offY.addEventListener('change', redraw);
 size.addEventListener('change', resize);
+margin.addEventListener('change', updateMargin);
+autoscale.addEventListener('change', updateMargin);
 
 // Manage dragging events to move the image on the canvas
 (() => {
@@ -183,6 +178,14 @@ canvas.addEventListener('wheel', event => {
     scale.value = x.toFixed(4);
     scale.dispatchEvent(new Event('change'));
 });
+
+function updateMargin() {
+    if (autoscale.checked) {
+        const halfWidth = canvas.width / 2;
+        scale.value = halfWidth / (halfWidth - margin.value);
+    }
+    redraw();
+}
 
 function resize() {
     canvas.width = canvas.height = size.value;
