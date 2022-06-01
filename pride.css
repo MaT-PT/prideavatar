@@ -89,7 +89,6 @@ footer a {
 }
 #colors1 label, #colors2 label {
     display: inline-block;
-    text-transform: capitalize;
 }
 form.drop-over {
     background: #aaa;
