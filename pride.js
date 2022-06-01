@@ -2,7 +2,8 @@
 const COLOR_SCHEMES = {
     '🇺🇦 ukraine':     ['#005bbb', '#ffd500'],
     'standard':       ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
-    'modern':         ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
+    'modern 1':       ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
+    'modern 2':       ['#e22016', '#f28917', '#efe524', '#78b82a', '#2c58a4', '#6d2380'],
     'progress lgbt':  ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
     'progress trans': ['#000000', '#603917', '#7cc0ea', '#f498c0', '#ffffff'],
     'bi':             ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
@@ -12,7 +13,7 @@ const COLOR_SCHEMES = {
     'ace':            ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
     'pan':            ['#ff1e8c', '#fed818', '#1fb2fd'],
 };
-const DEFAULT_SCHEME = 'modern';
+const DEFAULT_SCHEME = 'modern 1';
 /** @param {String} selector @returns {HTMLElement} */
 const $ = (selector) => document.querySelector(selector);
 /** @type {HTMLCanvasElement} */
