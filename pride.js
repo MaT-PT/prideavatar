@@ -1,17 +1,17 @@
 'use strict';
 const COLOR_SCHEMES = {
-    '🇺🇦 ukraine':     ['#005bbb', '#ffd500'],
-    'standard':       ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
-    'modern 1':       ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
-    'modern 2':       ['#e22016', '#f28917', '#efe524', '#78b82a', '#2c58a4', '#6d2380'],
-    'progress lgbt':  ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
-    'progress trans': ['#000000', '#603917', '#7cc0ea', '#f498c0', '#ffffff'],
-    'bi':             ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
-    'trans':          ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
-    'genderqueer':    ['#b67fdb', '#ffffff', '#478121'],
-    'enby':           ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
-    'ace':            ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
-    'pan':            ['#ff1e8c', '#fed818', '#1fb2fd'],
+    '🇺🇦 ukraine':         ['#005bbb', '#ffd500'],
+    'standard':           ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
+    'modern 1':           ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
+    'modern 2':           ['#e22016', '#f28917', '#efe524', '#78b82a', '#2c58a4', '#6d2380'],
+    'progress LGBT':      ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
+    'progress trans+PoC': ['#000000', '#603917', '#7cc0ea', '#f498c0', '#ffffff'],
+    'bi':                 ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
+    'trans':              ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
+    'genderqueer':        ['#b67fdb', '#ffffff', '#478121'],
+    'enby':               ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
+    'ace':                ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
+    'pan':                ['#ff1e8c', '#fed818', '#1fb2fd'],
 };
 const DEFAULT_SCHEME = 'modern 1';
 /** @param {String} selector @returns {HTMLElement} */
@@ -142,7 +142,7 @@ size.addEventListener('change', resize);
         input.value = name;
         input.checked = name === DEFAULT_SCHEME;
         input.addEventListener('change', redraw);
-        const text = name.replace(/(^\w|\s+\w)/g, m => m.toUpperCase()).replace(/lgbt/ig, "LGBT");
+        const text = name.replace(/(^\w|\s+\w)/g, m => m.toUpperCase());
         label.appendChild(document.createTextNode(text));
 
         const clone2 = clone.cloneNode(true);
