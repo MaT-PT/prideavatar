@@ -11,11 +11,13 @@ const COLOR_SCHEMES = {
     'gay men (MLM)':      ['#078d70', '#26ceaa', '#98e8c1', '#ffffff', '#7bade2', '#5049cc', '#3d1a78'],
     'lesbian (WLW)':      ['#d52d00', '#ef7627', '#ff9a56', '#ffffff', '#d162a4', '#b55690', '#a30262'],
     'bi':                 ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
+    'pan':                ['#ff1e8c', '#fed818', '#1fb2fd'],
+    'ace':                ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
     'trans':              ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
     'genderqueer':        ['#b67fdb', '#ffffff', '#478121'],
     'enby':               ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
-    'ace':                ['#000000', '#a4a4a4', '#ffffff', '#81047f'],
-    'pan':                ['#ff1e8c', '#fed818', '#1fb2fd'],
+    'agender':            ['#000000', '#bcc4c6', '#ffffff', '#b6f583', '#ffffff', '#bcc4c6', '#000000'],
+    'genderless':         ['#00b5a6', '#97d800', '#fef858', '#ffa101', '#ff4f00'],
 };
 const DEFAULT_SCHEME = 'modern 1';
 /** @param {String} selector @returns {HTMLElement} */
