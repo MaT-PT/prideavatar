@@ -12,12 +12,10 @@
         <header><h1>Pride Avatar Generator</h1></header>
         <label class="label-wrapper">Image size: <input id="size" type="number" min="200" max="1200" step="1" value="400" size="5">px</label>
         <canvas id="canvas" width="400" height="400"></canvas>
-        <div>
-            <label title="Crop image as it would appear on your social media profile">
-                <input type="checkbox" id="preview-circle">
-                Preview circular cropping
-            </label>
-        </div>
+        <label class="block-fit" title="Crop image as it would appear on your social media profile">
+            <input type="checkbox" id="preview-circle">
+            Preview circular cropping
+        </label>
         <div class="grid-wrapper">
             <label for="margin">Margin:</label>
             <input id="margin" title="Margin" type="number" min="-200" max="200" step="any" value="12" size="6">
@@ -26,7 +24,7 @@
                 <input id="scale" title="Scale" type="range" min="0.2" max="4" step="any" value="1">
                 <output id="scale-value"></output>
             </span>
-            <label class="span-4" title="Match margin and scale so that the avatar remains circular">
+            <label class="span-4 block-fit" title="Match margin and scale so that the avatar remains circular">
                 <input type="checkbox" id="autoscale">
                 Auto margin/scale
             </label>
@@ -47,8 +45,7 @@
         <p id="colors">
             <select id="color-select-1"></select>
             <select id="color-select-2" class="hidden"></select>
-            <br>
-            <label title="Split flag vertically into separate halves of different colors">
+            <label class="block-fit" title="Split flag vertically into separate halves of different colors">
                 <input type="checkbox" id="split-flag">
                 Add a second flag
             </label>
