@@ -1,4 +1,6 @@
 'use strict';
+let isLoading = true;
+
 const COLOR_SCHEMES = {
     '🇺🇦 ukraine':         ['#005bbb', '#ffd500'],
     'standard':           ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
@@ -30,6 +32,7 @@ const margin = $('#margin');
 const autoscale = $('#autoscale');
 const offX = $('#offx');
 const offY = $('#offy');
+const fileInput = $('#file');
 const colorSelect1 = $('#color-select-1');
 const colorSelect2 = $('#color-select-2');
 const colorPlural = $('#color-plural');
@@ -47,9 +50,7 @@ const image = new Image();
 reader.onload = () => image.src = reader.result;
 image.onload = redraw;
 
-$('#file').addEventListener('change', event => {
-    reader.readAsDataURL(event.target.files[0])
-});
+fileInput.addEventListener('change', checkImageFile);
 downloadBtn.onclick = () => {
     download.href = canvas.toDataURL('image/png');
     download.click();
@@ -162,7 +163,13 @@ function onDrop(event) {
             break;
         }
     }
-};
+}
+
+function checkImageFile() {
+    if (fileInput.files.length > 0) {
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
 
 // Handle mouse wheel to scaling
 canvas.addEventListener('wheel', event => {
@@ -241,6 +248,7 @@ function drawColors(colors, width, height) {
 }
 
 function redraw() {
+    if (isLoading) return;
     console.log("REDRAW");
     scaleValue.value = roundPercentage(scale.value);
     opacityValue.value = roundPercentage(opacity.value);
@@ -295,4 +303,6 @@ function redraw() {
     );
 }
 
+checkImageFile();
+isLoading = false;
 resize();
