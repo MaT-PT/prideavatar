@@ -30,8 +30,9 @@ const margin = $('#margin');
 const autoscale = $('#autoscale');
 const offX = $('#offx');
 const offY = $('#offy');
-const colorList1 = $('#colors1');
-const colorList2 = $('#colors2');
+const colorSelect1 = $('#color-select-1');
+const colorSelect2 = $('#color-select-2');
+const colorPlural = $('#color-plural');
 const splitFlag = $('#split-flag');
 const download = $('#download');
 const downloadBtn = $('#download-btn');
@@ -54,7 +55,8 @@ downloadBtn.onclick = () => {
     download.click();
 }
 splitFlag.addEventListener('change', () => {
-    colorList2.classList.toggle('hidden', !splitFlag.checked);
+    colorSelect2.classList.toggle('hidden', !splitFlag.checked);
+    colorPlural.classList.toggle('hidden', !splitFlag.checked);
     redraw();
 });
 scale.addEventListener('change', rescale);
@@ -128,25 +130,20 @@ autoscale.addEventListener('change', updateMargin);
 
 // Generate color scheme list
 (() => {
-    const template = $('#color-radio');
+    colorSelect1.addEventListener('change', redraw);
+    colorSelect2.addEventListener('change', redraw);
 
     Object.keys(COLOR_SCHEMES).forEach(name => {
-        const clone = document.importNode(template.content, true);
-        const input = clone.querySelector('input');
-        const label = clone.querySelector('label');
-        input.value = name;
-        input.checked = name === DEFAULT_SCHEME;
-        input.addEventListener('change', redraw);
+        const option = document.createElement('option')
+        option.value = name;
+        //option.selected = name === DEFAULT_SCHEME;
+        if (name === DEFAULT_SCHEME)
+            option.setAttribute("selected", "selected");
         const text = name.replace(/(^\w|\s+\w)/g, m => m.toUpperCase());
-        label.appendChild(document.createTextNode(text));
+        option.appendChild(document.createTextNode(text));
 
-        const clone2 = clone.cloneNode(true);
-        const input2 = clone2.querySelector('input');
-        input2.name = 'color2';
-        input2.addEventListener('change', redraw);
-
-        colorList1.appendChild(clone);
-        colorList2.appendChild(clone2);
+        colorSelect1.add(option);
+        colorSelect2.add(option.cloneNode(true));
     });
 
     splitFlag.dispatchEvent(new Event('change'));
@@ -263,8 +260,8 @@ function redraw() {
     }
 
     // Draw rainbow
-    const color1 = $('input[name="color1"]:checked').value || 'standard';
-    const color2 = $('input[name="color2"]:checked').value || 'standard';
+    const color1 = colorSelect1.value || 'standard';
+    const color2 = colorSelect2.value || 'standard';
     const radians = rotate.value * Math.PI / 180;
 
     ctx.translate(halfWidth, halfWidth);

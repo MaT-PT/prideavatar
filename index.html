@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pride Avatar Generator</title>
     <link href="pride.css" rel="stylesheet">
-    <script src="pride.js" defer async></script>
+    <script src="pride.js" defer></script>
   </head>
   <body>
     <form ondrop="onDrop(event);" ondragover="event.preventDefault()">
@@ -42,19 +42,17 @@
             <label for="offy">Y offset:</label>
             <input id="offy" title="Y offset" type="number" step="any" value="0" size="5">
         </div>
-        <input id='file' type='file' accept='image/*'>
-        <div>
-            <p id="colors1">
-                <template id="color-radio">
-                    <label><input type="radio" name="color1"></label>
-                </template>
-            </p>
+        <h2>Image file: <input id='file' type='file' accept='image/*'></h2>
+        <h2>Flag color palette<span id="color-plural" class="hidden">s</span>:</h2>
+        <p id="colors">
+            <select id="color-select-1"></select>
+            <select id="color-select-2" class="hidden"></select>
+            <br>
             <label title="Split flag vertically into separate halves of different colors">
                 <input type="checkbox" id="split-flag">
                 Add a second flag
             </label>
-            <p id="colors2" class="hidden"></p>
-        </div>
+        </p>
         <p>
             <button id="download-btn" type="button">Save as PNG</button>
             <a id="download" download="pride-avatar.png" style="visibility: hidden;"></a>
