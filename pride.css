@@ -1,5 +1,5 @@
 body {
-    width: 1200px;
+    /* width: 1200px; */
     margin: 1em auto;
     color: #ddd;
     background-color: #333;
@@ -27,7 +27,8 @@ input[type="checkbox"] {
 }
 .grid-wrapper {
     display: grid;
-    grid-template-columns: 5fr max-content 1fr 7fr;
+    justify-content: center;
+    grid-template-columns: max-content max-content max-content max-content;
     grid-gap: 0.5em 0.5em;
     margin: 1em auto;
 }
