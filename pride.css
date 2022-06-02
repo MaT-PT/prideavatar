@@ -41,6 +41,10 @@ input[type="checkbox"] {
 .slider-wrapper {
     text-align: left;
 }
+.slider-wrapper output {
+    display: inline-block;
+    width: 3em;
+}
 .grid-wrapper input[type="range"] {
     width: 200px;
     height: 1em;
