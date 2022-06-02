@@ -8,6 +8,8 @@ const COLOR_SCHEMES = {
     'modern 2':           ['#e22016', '#f28917', '#efe524', '#78b82a', '#2c58a4', '#6d2380'],
     'progress LGBT':      ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
     'progress trans+PoC': ['#000000', '#603917', '#7cc0ea', '#f498c0', '#ffffff'],
+    'gay men (MLM)':      ['#078d70', '#26ceaa', '#98e8c1', '#ffffff', '#7bade2', '#5049cc', '#3d1a78'],
+    'lesbian (WLW)':      ['#d52d00', '#ef7627', '#ff9a56', '#ffffff', '#d162a4', '#b55690', '#a30262'],
     'bi':                 ['#d60270', '#d60270', '#9b4f96', '#0038a8', '#0038a8'],
     'trans':              ['#5bcffa', '#f5abb9', '#ffffff', '#f5abb9', '#5bcffa'],
     'genderqueer':        ['#b67fdb', '#ffffff', '#478121'],
