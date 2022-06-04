@@ -153,21 +153,21 @@ input[type=color]::-moz-focus-inner {
     display: none;
 }
 #colors-wrapper.split-flag #color-select-1,
-#colors-wrapper.split-flag.show-custom-colors1 #custom-colors-1 {
+#colors-wrapper.split-flag.show-custom-colors-1 #custom-colors-1 {
     grid-column-end: span 1;
 }
 #colors-wrapper:not(.split-flag) #color-select-1,
-#colors-wrapper:not(.split-flag).show-custom-colors1 #custom-colors-1 {
+#colors-wrapper:not(.split-flag).show-custom-colors-1 #custom-colors-1 {
     grid-column-end: span 2;
 }
 #colors-wrapper.split-flag #color-select-2,
-#colors-wrapper.show-custom-colors1 #custom-colors-1,
-#colors-wrapper.split-flag.show-custom-colors2 #custom-colors-1,
-#colors-wrapper.split-flag.show-custom-colors1 #custom-colors-2,
-#colors-wrapper.split-flag.show-custom-colors2 #custom-colors-2 {
+#colors-wrapper.show-custom-colors-1 #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors-2 #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors-1 #custom-colors-2,
+#colors-wrapper.split-flag.show-custom-colors-2 #custom-colors-2 {
     display: block;
 }
-#colors-wrapper.split-flag.show-custom-colors2:not(.show-custom-colors1) #custom-colors-1,
-#colors-wrapper.split-flag.show-custom-colors1:not(.show-custom-colors2) #custom-colors-2 {
+#colors-wrapper.split-flag.show-custom-colors-2:not(.show-custom-colors-1) #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors-1:not(.show-custom-colors-2) #custom-colors-2 {
     visibility: hidden;
 }

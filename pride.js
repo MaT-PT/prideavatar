@@ -146,7 +146,7 @@ autoscale.addEventListener('change', updateMargin);
     function changeColors(event) {
         const value = event.target.value;
         const selectId = event.target.id.slice(-1);
-        colorsWrapper.classList.toggle('show-custom-colors' + selectId, COLOR_SCHEMES[value].length === 0);
+        colorsWrapper.classList.toggle('show-custom-colors-' + selectId, COLOR_SCHEMES[value].length === 0);
         redraw();
     }
     colorSelect1.addEventListener('change', changeColors);
