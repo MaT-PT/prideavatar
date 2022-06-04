@@ -42,14 +42,23 @@
         </div>
         <h2>Image file: <input id='file' type='file' accept='image/*'></h2>
         <h2>Flag color palette<span id="color-plural" class="hidden">s</span>:</h2>
-        <p id="colors">
+        <div id="colors-wrapper">
             <select id="color-select-1"></select>
-            <select id="color-select-2" class="hidden"></select>
-            <label class="block-fit" title="Split flag vertically into separate halves of different colors">
+            <select id="color-select-2"></select>
+            <label class="block-fit span-2" title="Split flag vertically into separate halves of different colors">
                 <input type="checkbox" id="split-flag">
                 Add a second flag
             </label>
-        </p>
+            <div id="custom-colors-1" class="custom-colors-wrapper">
+                <div class="color-input block-fit">
+                    <input type="color" onchange="redraw()"><button type="button" onclick="deleteCustomColor(event)">⛔</button>
+                </div>
+                <button id="add-color-1" type="button" onclick="addCustomColor(event)">➕</button>
+            </div>
+            <div id="custom-colors-2" class="custom-colors-wrapper">
+                <button id="add-color-2" type="button" onclick="addCustomColor(event)">➕</button>
+            </div>
+        </div>
         <p>
             <button id="download-btn" type="button">Save as PNG</button>
             <a id="download" download="pride-avatar.png" style="visibility: hidden;"></a>

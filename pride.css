@@ -28,12 +28,15 @@ input[type="checkbox"] {
 .grid-wrapper {
     display: grid;
     justify-content: center;
-    grid-template-columns: max-content max-content max-content max-content;
+    grid-template-columns: repeat(4, max-content);
     grid-gap: 0.5em 0.5em;
     margin: 1em auto;
 }
 .grid-wrapper label[for] {
     text-align: right;
+}
+.span-2 {
+    grid-column-end: span 2;
 }
 .span-4 {
     grid-column-end: span 4;
@@ -63,9 +66,6 @@ input[type="checkbox"] {
     width: -moz-fit-content;
     width: fit-content;
     margin: auto;
-}
-#colors {
-    margin: .25em;
 }
 #download-btn {
     color: #ddd;
@@ -108,4 +108,66 @@ footer a {
 }
 form.drop-over {
     background: #aaa;
+}
+#colors-wrapper {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, max-content);
+    grid-gap: 0.5em 0.5em;
+    margin: 0.5em auto;
+}
+input[type="color"] {
+    width: 8em;
+    height: 2em;
+    border: 1px dotted black;
+    outline: none;
+    padding: 0;
+    vertical-align: middle;
+}
+input[type=color]::-webkit-color-swatch-wrapper {
+  padding: 0; /* Remove browser's padding around color picker */
+}
+input[type=color]::-webkit-color-swatch {
+  border: none; /* Remove browser's border around color in color picker */
+}
+input[type=color]::-moz-color-swatch {
+  border: none; /* Remove browser's border around color in color picker */
+}
+input[type=color]::-moz-focus-inner {
+  border: none; /* Remove browser's padding around color in color picker */
+  padding: 0; /* Remove browser's padding around color in color picker */
+}
+.color-input {
+    line-height: 0;
+}
+.color-input button {
+    box-sizing: content-box;
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: 0.5em;
+    padding: 0;
+    vertical-align: middle;
+}
+#colors-wrapper .custom-colors-wrapper,
+#colors-wrapper #color-select-2 {
+    display: none;
+}
+#colors-wrapper.split-flag #color-select-1,
+#colors-wrapper.split-flag.show-custom-colors1 #custom-colors-1 {
+    grid-column-end: span 1;
+}
+#colors-wrapper:not(.split-flag) #color-select-1,
+#colors-wrapper:not(.split-flag).show-custom-colors1 #custom-colors-1 {
+    grid-column-end: span 2;
+}
+#colors-wrapper.split-flag #color-select-2,
+#colors-wrapper.show-custom-colors1 #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors2 #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors1 #custom-colors-2,
+#colors-wrapper.split-flag.show-custom-colors2 #custom-colors-2 {
+    display: block;
+}
+#colors-wrapper.split-flag.show-custom-colors2:not(.show-custom-colors1) #custom-colors-1,
+#colors-wrapper.split-flag.show-custom-colors1:not(.show-custom-colors2) #custom-colors-2 {
+    visibility: hidden;
 }

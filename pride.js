@@ -18,6 +18,7 @@ const COLOR_SCHEMES = {
     'enby':               ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
     'agender':            ['#000000', '#bcc4c6', '#ffffff', '#b6f583', '#ffffff', '#bcc4c6', '#000000'],
     'genderless':         ['#00b5a6', '#97d800', '#fef858', '#ffa101', '#ff4f00'],
+    'custom…':            [],
 };
 const DEFAULT_SCHEME = 'modern 1';
 /** @param {String} selector @returns {HTMLElement} */
@@ -37,9 +38,12 @@ const autoscale = $('#autoscale');
 const offX = $('#offx');
 const offY = $('#offy');
 const fileInput = $('#file');
+const colorsWrapper = $('#colors-wrapper');
 const colorSelect1 = $('#color-select-1');
 const colorSelect2 = $('#color-select-2');
 const colorPlural = $('#color-plural');
+const customColors1 = $('#custom-colors-1');
+const customColors2 = $('#custom-colors-2');
 const splitFlag = $('#split-flag');
 const download = $('#download');
 const downloadBtn = $('#download-btn');
@@ -60,7 +64,7 @@ downloadBtn.onclick = () => {
     download.click();
 }
 splitFlag.addEventListener('change', () => {
-    colorSelect2.classList.toggle('hidden', !splitFlag.checked);
+    colorsWrapper.classList.toggle('split-flag', splitFlag.checked);
     colorPlural.classList.toggle('hidden', !splitFlag.checked);
     redraw();
 });
@@ -135,8 +139,18 @@ autoscale.addEventListener('change', updateMargin);
 
 // Generate color scheme list
 (() => {
-    colorSelect1.addEventListener('change', redraw);
-    colorSelect2.addEventListener('change', redraw);
+    /**
+     * Update interface when a new color scheme is selected
+     * @param {Event} event 
+     */
+    function changeColors(event) {
+        const value = event.target.value;
+        const selectId = event.target.id.slice(-1);
+        colorsWrapper.classList.toggle('show-custom-colors' + selectId, COLOR_SCHEMES[value].length === 0);
+        redraw();
+    }
+    colorSelect1.addEventListener('change', changeColors);
+    colorSelect2.addEventListener('change', changeColors);
 
     Object.keys(COLOR_SCHEMES).forEach(name => {
         const option = document.createElement('option')
@@ -167,6 +181,35 @@ function onDrop(event) {
             break;
         }
     }
+}
+
+const customColorTemplate = $('#custom-colors-1 > .color-input').cloneNode(true);
+customColorTemplate.querySelector('input').value = '#000000';
+$('#custom-colors-2').insertAdjacentElement('afterbegin', customColorTemplate.cloneNode(true));
+
+/**
+ * Add custom color input
+ * @param {MouseEvent} event
+ */
+function addCustomColor(event) {
+    /** @type {HTMLElement} */
+    const parent = event.target.parentElement;
+    parent.insertBefore(customColorTemplate.cloneNode(true), parent.lastElementChild);
+    redraw();
+}
+
+/**
+ * Delete custom color input
+ * @param {MouseEvent} event
+ */
+function deleteCustomColor(event) {
+    event.target.parentElement.remove();
+    redraw();
+}
+
+function getCustomColorList(selectId) {
+    const colorInputs = document.querySelectorAll('#custom-colors-' + selectId + ' input[type="color"]');
+    return Array.prototype.map.call(colorInputs, input => input.value);
 }
 
 function checkImageFile() {
@@ -272,20 +315,28 @@ function redraw() {
     }
 
     // Draw rainbow
-    const color1 = colorSelect1.value || 'standard';
-    const color2 = colorSelect2.value || 'standard';
+    const colorName1 = colorSelect1.value || 'standard';
+    const colorName2 = colorSelect2.value || 'standard';
     const radians = rotate.value * Math.PI / 180;
+
+    let colorList1 = COLOR_SCHEMES[colorName1];
+    let colorList2 = COLOR_SCHEMES[colorName2];
+
+    if (colorList1.length === 0)
+        colorList1 = getCustomColorList(1);
+    if (colorList2.length === 0)
+        colorList2 = getCustomColorList(2);
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
     ctx.translate(-canvas.width, -halfWidth);
     if (splitFlag.checked) {
-        drawColors(COLOR_SCHEMES[color1], canvas.width + 1, canvas.height);
+        drawColors(colorList1, canvas.width + 1, canvas.height);
         ctx.translate(canvas.width, -canvas.height);
-        drawColors(COLOR_SCHEMES[color2], canvas.width, canvas.height);
+        drawColors(colorList2, canvas.width, canvas.height);
     }
     else {
-        drawColors(COLOR_SCHEMES[color1], canvas.width * 2, canvas.height);
+        drawColors(colorList1, canvas.width * 2, canvas.height);
     }
     ctx.resetTransform();
 
