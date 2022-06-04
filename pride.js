@@ -60,8 +60,13 @@ image.onload = redraw;
 
 fileInput.addEventListener('change', checkImageFile);
 downloadBtn.onclick = () => {
+    const isChecked = previewCircle.checked;
+    previewCircle.checked = false;
+    redraw();
     download.href = canvas.toDataURL('image/png');
     download.click();
+    previewCircle.checked = isChecked;
+    redraw();
 }
 splitFlag.addEventListener('change', () => {
     colorsWrapper.classList.toggle('split-flag', splitFlag.checked);
