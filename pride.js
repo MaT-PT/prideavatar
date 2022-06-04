@@ -189,16 +189,19 @@ function onDrop(event) {
 
 const customColorTemplate = $('#custom-colors-1 > .color-input').cloneNode(true);
 customColorTemplate.querySelector('input').value = '#000000';
-$('#custom-colors-2').insertAdjacentElement('afterbegin', customColorTemplate.cloneNode(true));
+customColors2.insertAdjacentElement('afterbegin', customColorTemplate.cloneNode(true));
+updateButtonDisabledStatus(customColors1);
+updateButtonDisabledStatus(customColors2);
 
 /**
  * Add custom color input
  * @param {MouseEvent} event
  */
 function addCustomColor(event) {
-    /** @type {HTMLElement} */
+    /** @type {HTMLDivElement} */
     const parent = event.target.parentElement;
     parent.insertBefore(customColorTemplate.cloneNode(true), parent.lastElementChild);
+    updateButtonDisabledStatus(parent);
     updateCustomColorLists();
 }
 
@@ -207,8 +210,21 @@ function addCustomColor(event) {
  * @param {MouseEvent} event
  */
 function deleteCustomColor(event) {
-    event.target.parentElement.remove();
+    /** @type {HTMLDivElement} */
+    const parent = event.target.parentElement;
+    const colorsWrapper = parent.parentElement;
+    parent.remove();
+    updateButtonDisabledStatus(colorsWrapper);
     updateCustomColorLists();
+}
+
+/**
+ * Disable “remove” button if there is only one color input remaining
+ * @param {HTMLDivElement} colorsWrapper
+ */
+function updateButtonDisabledStatus(colorsWrapper) {
+    const colorInputs = colorsWrapper.querySelectorAll('.color-input');
+    colorInputs[0].querySelector('button').disabled = colorInputs.length === 1;
 }
 
 /**

@@ -171,3 +171,6 @@ input[type=color]::-moz-focus-inner {
 #colors-wrapper.split-flag.show-custom-colors-1:not(.show-custom-colors-2) #custom-colors-2 {
     visibility: hidden;
 }
+:disabled {
+    cursor: not-allowed;
+}
