@@ -84,15 +84,15 @@ autoscale.addEventListener('change', updateMargin);
     let dragX = 0;
     let dragY = 0;
 
-    canvas.addEventListener("mousedown", ev => {
+    canvas.addEventListener('mousedown', ev => {
         isDragging = true;
         dragX = ev.offsetX;
         dragY = ev.offsetY;
     });
-    canvas.addEventListener("mouseup", ev => {
+    canvas.addEventListener('mouseup', ev => {
         isDragging = false;
     });
-    canvas.addEventListener("mousemove", ev => {
+    canvas.addEventListener('mousemove', ev => {
         if (!(isDragging && ev.buttons === 1)) return;
 
         ev.preventDefault();
@@ -107,19 +107,19 @@ autoscale.addEventListener('change', updateMargin);
         offY.value = parseFloat(offY.value) + imageScale * deltaY;
         redraw();
     });
-    canvas.addEventListener("touchstart", ev => {
+    canvas.addEventListener('touchstart', ev => {
         isDragging = true;
         const touch = ev.touches[0];
         dragX = touch.pageX;
         dragY = touch.pageY;
     });
-    canvas.addEventListener("touchend", ev => {
+    canvas.addEventListener('touchend', ev => {
         isDragging = false;
     });
-    canvas.addEventListener("touchcancel", ev => {
+    canvas.addEventListener('touchcancel', ev => {
         isDragging = false;
     });
-    canvas.addEventListener("touchmove", ev => {
+    canvas.addEventListener('touchmove', ev => {
         if (!isDragging) return;
         ev.preventDefault();
         ev.stopPropagation();
@@ -157,7 +157,7 @@ autoscale.addEventListener('change', updateMargin);
         option.value = name;
         //option.selected = name === DEFAULT_SCHEME;
         if (name === DEFAULT_SCHEME)
-            option.setAttribute("selected", "selected");
+            option.setAttribute('selected', 'selected');
         const text = name.replace(/(^\w|\s+\w)/g, m => m.toUpperCase());
         option.appendChild(document.createTextNode(text));
 
@@ -296,7 +296,7 @@ function drawColors(colors, width, height) {
 
 function redraw() {
     if (isLoading) return;
-    console.log("REDRAW");
+    console.log('REDRAW');
     scaleValue.value = roundPercentage(scale.value);
     opacityValue.value = roundPercentage(opacity.value);
     
