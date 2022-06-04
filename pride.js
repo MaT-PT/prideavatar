@@ -146,8 +146,12 @@ autoscale.addEventListener('change', updateMargin);
     function changeColors(event) {
         const value = event.target.value;
         const selectId = event.target.id.slice(-1);
-        colorsWrapper.classList.toggle('show-custom-colors-' + selectId, COLOR_SCHEMES[value].length === 0);
-        redraw();
+        const isCustom = COLOR_SCHEMES[value].length === 0;
+        colorsWrapper.classList.toggle('show-custom-colors-' + selectId, isCustom);
+        if (isCustom)
+            updateCustomColorLists();
+        else
+            redraw();
     }
     colorSelect1.addEventListener('change', changeColors);
     colorSelect2.addEventListener('change', changeColors);
@@ -195,7 +199,7 @@ function addCustomColor(event) {
     /** @type {HTMLElement} */
     const parent = event.target.parentElement;
     parent.insertBefore(customColorTemplate.cloneNode(true), parent.lastElementChild);
-    redraw();
+    updateCustomColorLists();
 }
 
 /**
@@ -204,12 +208,27 @@ function addCustomColor(event) {
  */
 function deleteCustomColor(event) {
     event.target.parentElement.remove();
-    redraw();
+    updateCustomColorLists();
 }
 
+/**
+ * Returns the list of custom colors for the given flag number
+ * @param {string | number} selectId
+ * @returns {string[]}
+ */
 function getCustomColorList(selectId) {
     const colorInputs = document.querySelectorAll('#custom-colors-' + selectId + ' input[type="color"]');
     return Array.prototype.map.call(colorInputs, input => input.value);
+}
+
+/** @type {string[][]} */
+const customColorLists = [];
+
+function updateCustomColorLists() {
+    customColorLists[1] = getCustomColorList(1);
+    customColorLists[2] = getCustomColorList(2);
+
+    redraw();
 }
 
 function checkImageFile() {
@@ -323,9 +342,9 @@ function redraw() {
     let colorList2 = COLOR_SCHEMES[colorName2];
 
     if (colorList1.length === 0)
-        colorList1 = getCustomColorList(1);
+        colorList1 = customColorLists[1];
     if (colorList2.length === 0)
-        colorList2 = getCustomColorList(2);
+        colorList2 = customColorLists[2];
 
     ctx.translate(halfWidth, halfWidth);
     ctx.rotate(radians);
