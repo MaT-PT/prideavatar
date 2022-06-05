@@ -203,11 +203,38 @@ function onDrop(event) {
     }
 }
 
-const customColorTemplate = $('#custom-colors-1 > .color-input').cloneNode(true);
-customColorTemplate.querySelector('input').value = '#000000';
-customColors2.insertAdjacentElement('afterbegin', customColorTemplate.cloneNode(true));
-updateButtonDisabledStatus(customColors1);
-updateButtonDisabledStatus(customColors2);
+const defaultColorInput = $('#custom-colors-1 > .color-input');
+const colorInputTemplate = defaultColorInput.cloneNode(true);
+colorInputTemplate.querySelector('input[type="color"]').value = '#000000';
+
+(() => {
+    /** @type {?string[]} */
+    const savedColors1 = JSON.parse(window.localStorage.getItem('customColors1'));
+    if (savedColors1 && savedColors1.length > 0) {
+        defaultColorInput.remove();
+        const lastElement = customColors1.lastElementChild;
+        savedColors1.forEach(color => {
+            const newColorInput = colorInputTemplate.cloneNode(true);
+            newColorInput.querySelector('input[type="color"]').value = color;
+            lastElement.before(newColorInput);
+        });
+    }
+    /** @type {?string[]} */
+    const savedColors2 = JSON.parse(window.localStorage.getItem('customColors2'));
+    if (savedColors2 && savedColors2.length > 0) {
+        const lastElement = customColors2.lastElementChild;
+        savedColors2.forEach(color => {
+            const newColorInput = colorInputTemplate.cloneNode(true);
+            newColorInput.querySelector('input[type="color"]').value = color;
+            lastElement.before(newColorInput);
+        });
+    }
+    else {
+        customColors2.insertAdjacentElement('afterbegin', colorInputTemplate.cloneNode(true));
+    }
+    updateButtonDisabledStatus(customColors1);
+    updateButtonDisabledStatus(customColors2);
+})();
 
 /**
  * Add custom color input
@@ -216,7 +243,7 @@ updateButtonDisabledStatus(customColors2);
 function addCustomColor(event) {
     /** @type {HTMLDivElement} */
     const parent = event.target.parentElement;
-    parent.insertBefore(customColorTemplate.cloneNode(true), parent.lastElementChild);
+    parent.insertBefore(colorInputTemplate.cloneNode(true), parent.lastElementChild);
     updateButtonDisabledStatus(parent);
     updateCustomColorLists();
 }
@@ -285,6 +312,8 @@ const customColorLists = [];
 function updateCustomColorLists() {
     customColorLists[1] = getCustomColorList(1);
     customColorLists[2] = getCustomColorList(2);
+    window.localStorage.setItem('customColors1', JSON.stringify(customColorLists[1]));
+    window.localStorage.setItem('customColors2', JSON.stringify(customColorLists[2]));
 
     redraw();
 }
