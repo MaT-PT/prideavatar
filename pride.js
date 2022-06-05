@@ -203,34 +203,39 @@ function onDrop(event) {
     }
 }
 
-const defaultColorInput = $('#custom-colors-1 > .color-input');
-const colorInputTemplate = defaultColorInput.cloneNode(true);
+const colorInputTemplate = $('#custom-colors-1 > .color-input').cloneNode(true);
 colorInputTemplate.querySelector('input[type="color"]').value = '#000000';
+
+/**
+ * 
+ * @param {string[]} colorList 
+ * @param {HTMLDivElement} targetContainer 
+ */
+function loadCustomColors(colorList, targetContainer) {
+    // Remove existing color inputs
+    Array.prototype.forEach.call(targetContainer.querySelectorAll('.color-input'), element => element.remove());
+
+    const lastElement = targetContainer.lastElementChild;
+    colorList.forEach(color => {
+        const newColorInput = colorInputTemplate.cloneNode(true);
+        newColorInput.querySelector('input[type="color"]').value = color;
+        lastElement.before(newColorInput);
+    });
+}
 
 (() => {
     /** @type {?string[]} */
     const savedColors1 = JSON.parse(window.localStorage.getItem('customColors1'));
     if (savedColors1 && savedColors1.length > 0) {
-        defaultColorInput.remove();
-        const lastElement = customColors1.lastElementChild;
-        savedColors1.forEach(color => {
-            const newColorInput = colorInputTemplate.cloneNode(true);
-            newColorInput.querySelector('input[type="color"]').value = color;
-            lastElement.before(newColorInput);
-        });
+        loadCustomColors(savedColors1, customColors1);
     }
     /** @type {?string[]} */
     const savedColors2 = JSON.parse(window.localStorage.getItem('customColors2'));
     if (savedColors2 && savedColors2.length > 0) {
-        const lastElement = customColors2.lastElementChild;
-        savedColors2.forEach(color => {
-            const newColorInput = colorInputTemplate.cloneNode(true);
-            newColorInput.querySelector('input[type="color"]').value = color;
-            lastElement.before(newColorInput);
-        });
+        loadCustomColors(savedColors2, customColors2);
     }
     else {
-        customColors2.insertAdjacentElement('afterbegin', colorInputTemplate.cloneNode(true));
+        loadCustomColors(['#000000'], customColors2);
     }
     updateButtonDisabledStatus(customColors1);
     updateButtonDisabledStatus(customColors2);
