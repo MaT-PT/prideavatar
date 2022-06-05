@@ -51,7 +51,10 @@
             </label>
             <div id="custom-colors-1" class="custom-colors-wrapper">
                 <div class="color-input block-fit">
-                    <input type="color" oninput="updateCustomColorLists()"><button type="button" onclick="deleteCustomColor(event)">⛔</button>
+                    <input type="color" oninput="updateCustomColorLists()">
+                    <button type="button" class="btn-up"     onclick="moveCustomColor(event)"><div></div></button>
+                    <button type="button" class="btn-down"   onclick="moveCustomColor(event)"><div></div></button>
+                    <button type="button" class="btn-remove" onclick="deleteCustomColor(event)">⛔</button>
                 </div>
                 <button id="add-color-1" type="button" onclick="addCustomColor(event)">➕</button>
             </div>

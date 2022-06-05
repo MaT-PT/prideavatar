@@ -211,6 +211,32 @@ function addCustomColor(event) {
 }
 
 /**
+ * Move custom color input up or down
+ * @param {MouseEvent} event
+ */
+function moveCustomColor(event) {
+    /** @type {HTMLButtonElement} */
+    const button = event.currentTarget;
+    const parent = button.parentElement;
+    switch (button.classList[0]) {
+        case 'btn-up':
+            const prevSibling = parent.previousElementSibling;
+            if (prevSibling) {
+                parent.parentElement.insertBefore(parent, prevSibling);
+            }
+            break;
+
+        case 'btn-down':
+            const nextSibling = parent.nextElementSibling;
+            if (nextSibling && nextSibling.classList.contains('color-input')) {
+                parent.parentElement.insertBefore(nextSibling, parent);
+            }
+            break;
+    }
+    updateCustomColorLists();
+}
+
+/**
  * Delete custom color input
  * @param {MouseEvent} event
  */
@@ -229,7 +255,7 @@ function deleteCustomColor(event) {
  */
 function updateButtonDisabledStatus(colorsWrapper) {
     const colorInputs = colorsWrapper.querySelectorAll('.color-input');
-    colorInputs[0].querySelector('button').disabled = colorInputs.length === 1;
+    colorInputs[0].querySelector('.btn-remove').disabled = colorInputs.length === 1;
 }
 
 /**
