@@ -25,6 +25,12 @@ input[type="checkbox"] {
     width: 50px;
     text-align: right;
 }
+#canvas {
+    cursor: grab;
+}
+#canvas.grabbing {
+    cursor: grabbing;
+}
 .grid-wrapper {
     display: grid;
     justify-content: center;

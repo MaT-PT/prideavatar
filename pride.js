@@ -91,14 +91,19 @@ autoscale.addEventListener('change', updateMargin);
 
     canvas.addEventListener('mousedown', ev => {
         isDragging = true;
+        canvas.classList.add('grabbing');
         dragX = ev.offsetX;
         dragY = ev.offsetY;
     });
     canvas.addEventListener('mouseup', ev => {
         isDragging = false;
+        canvas.classList.remove('grabbing');
     });
     canvas.addEventListener('mousemove', ev => {
-        if (!(isDragging && ev.buttons === 1)) return;
+        if (!(isDragging && ev.buttons === 1)) {
+            canvas.classList.remove('grabbing');
+            return;
+        }
 
         ev.preventDefault();
         ev.stopPropagation();
@@ -114,18 +119,24 @@ autoscale.addEventListener('change', updateMargin);
     });
     canvas.addEventListener('touchstart', ev => {
         isDragging = true;
+        canvas.classList.add('grabbing');
         const touch = ev.touches[0];
         dragX = touch.pageX;
         dragY = touch.pageY;
     });
     canvas.addEventListener('touchend', ev => {
         isDragging = false;
+        canvas.classList.remove('grabbing');
     });
     canvas.addEventListener('touchcancel', ev => {
         isDragging = false;
+        canvas.classList.remove('grabbing');
     });
     canvas.addEventListener('touchmove', ev => {
-        if (!isDragging) return;
+        if (!isDragging) {
+            canvas.classList.remove('grabbing');
+            return;
+        }
         ev.preventDefault();
         ev.stopPropagation();
 
