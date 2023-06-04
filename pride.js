@@ -3,11 +3,11 @@ let isLoading = true;
 
 const COLOR_SCHEMES = {
     '🇺🇦 ukraine':         ['#005bbb', '#ffd500'],
-    'standard':           ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
+    'standard LGBT+':     ['#e50000', '#ff8d00', '#ffee00', '#008121', '#004cff', '#760188'],
     'modern 1':           ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'],
     'modern 2':           ['#e22016', '#f28917', '#efe524', '#78b82a', '#2c58a4', '#6d2380'],
     'pastel':             ['#f67a7d', '#ffc268', '#f6f58a', '#a1df91', '#71a1d5', '#957cb0'],
-    'progress LGBT':      ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
+    'progress LGBT+':     ['#ee3124', '#f57f29', '#fff000', '#58b947', '#0054a6', '#9f248f'],
     'progress trans+PoC': ['#000000', '#603917', '#7cc0ea', '#f498c0', '#ffffff'],
     'gay men (MLM)':      ['#078d70', '#26ceaa', '#98e8c1', '#ffffff', '#7bade2', '#5049cc', '#3d1a78'],
     'lesbian (WLW)':      ['#d52d00', '#ef7627', '#ff9a56', '#ffffff', '#d162a4', '#b55690', '#a30262'],
@@ -19,6 +19,13 @@ const COLOR_SCHEMES = {
     'enby':               ['#fff434', '#ffffff', '#9c59cf', '#2d2d2d'],
     'agender':            ['#000000', '#bcc4c6', '#ffffff', '#b6f583', '#ffffff', '#bcc4c6', '#000000'],
     'genderless':         ['#00b5a6', '#97d800', '#fef858', '#ffa101', '#ff4f00'],
+    'muted - LGBT+':      ['#f43f50', '#f76b48', '#ffb54a', '#98a939', '#4b32b2', '#510b7d'],
+    'muted - progress':   ['#eedcd8', '#ffa38e', '#5ab7bf', '#7d3924', '#281710'],
+    'muted - Baker LGBT': ['#fe7faa', '#f43f50', '#f76b48', '#ffb54a', '#98a939', '#3ca793', '#4b32b2', '#510b7d'],
+    'muted - bi':         ['#c02865', '#c02865', '#622b91', '#4d50a1', '#4d50a1'],
+    'muted - pan':        ['#da2051', '#d29731', '#2d94b3'],
+    'muted - ace':        ['#230023', '#504251', '#f0e6ef', '#750e6a'],
+    'muted - trans':      ['#5ab7bf', '#ffa38e', '#eedcd8', '#ffa38e', '#5ab7bf'],
     'custom…':            [],
 };
 const DEFAULT_SCHEME = 'modern 1';
